@@ -7,12 +7,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// HealthCheckHandler checks the health of the API
-func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"status": "OK"})
-}
-
 // GetWaterUsageHandler retrieves the current water usage data
 func GetWaterUsageHandler(w http.ResponseWriter, r *http.Request) {
 	// Mock data for demonstration

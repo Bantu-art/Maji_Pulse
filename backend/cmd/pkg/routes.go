@@ -8,9 +8,6 @@ import (
 func InitializeRoutes() *mux.Router {
 	router := mux.NewRouter()
 
-	// Health check route
-	router.HandleFunc("/api/health", HealthCheckHandler).Methods("GET")
-
 	// Water usage routes
 	router.HandleFunc("/api/water-usage", GetWaterUsageHandler).Methods("GET")
 	router.HandleFunc("/api/water-usage", UpdateWaterUsageHandler).Methods("POST")
