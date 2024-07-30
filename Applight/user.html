@@ -3,45 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light background color */
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px; /* Set a maximum width */
+            width: 90%; /* Make sure it takes 90% of the viewport width */
+            margin: 0 auto; /* Center the container */
+        }
+
+        /* Header Styles */
+        .dashboard-header {
+            background-color: #007bff; /* Primary color */
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .dashboard-header nav {
+            margin-top: 10px;
+        }
+
+        .dashboard-header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .dashboard-header nav a:hover {
+            color: #f1f1f1;
+            text-decoration: underline;
+        }
+
+        /* Main Content Styles */
+        .dashboard-content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-section {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px auto;
+            width: 80%;
+            max-width: 400px; /* Set a maximum width for the cards */
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #007bff; /* Primary color */
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .card ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .card ul li {
+            margin-bottom: 10px;
+        }
+
+        /* Links */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-login:hover {
+            background-color: #0056b3;
+            color: #e0e0e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+
+            .dashboard-header nav a {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .card {
+                padding: 15px;
+                width: 100%;
+                max-width: none; /* Remove max-width for smaller screens */
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="dashboard-header">
         <div class="container">
-            <h1>Welcome, [Username]</h1>
+            <h1>Welcome, Admin</h1>
             <nav>
-                <a href="#usage">Water Usage</a>
-                <a href="#billing">Billing Information</a>
-                <a href="#settings">Settings</a>
+                <a href="#flowrate">Flow Rate</a>
+                <a href="#leakage">Leakage Alerts</a>
+                <a href="#distribution">Fair Distribution</a>
             </nav>
         </div>
     </header>
     <main class="dashboard-content">
-        <section id="usage" class="dashboard-section">
-            <h2>Water Usage</h2>
+        <section id="flowrate" class="dashboard-section">
+            <h2>Flow Rate</h2>
             <div class="card">
-                <h3>Total Usage</h3>
-                <p>1000 Liters</p>
+                <h3>Kondele</h3>
+                <p>10 L/min</p>
             </div>
             <div class="card">
-                <h3>Leakage Alerts</h3>
+                <h3>Manyatta</h3>
+                <p>15 L/min</p>
+            </div>
+            <div class="card">
+                <h3>Mamboleo</h3>
+                <p>12 L/min</p>
+            </div>
+        </section>
+        <section id="leakage" class="dashboard-section">
+            <h2>Leakage Alerts</h2>
+            <div class="card">
+                <h3>Kondele</h3>
+                <p>No leaks detected</p>
+            </div>
+            <div class="card">
+                <h3>Manyatta</h3>
+                <p>Leak detected</p>
+            </div>
+            <div class="card">
+                <h3>Mamboleo</h3>
                 <p>No leaks detected</p>
             </div>
         </section>
-        <section id="billing" class="dashboard-section">
-            <h2>Billing Information</h2>
+        <section id="distribution" class="dashboard-section">
+            <h2>Fair Distribution</h2>
             <div class="card">
-                <h3>Current Month</h3>
-                <p>$25.00</p>
+                <h3>Kondele</h3>
+                <p>33% of total supply</p>
             </div>
             <div class="card">
-                <h3>Billing History</h3>
-                <ul>
-                    <li>June: $20.00</li>
-                    <li>May: $22.50</li>
-                </ul>
+                <h3>Manyatta</h3>
+                <p>33% of total supply</p>
+            </div>
+            <div class="card">
+                <h3>Mamboleo</h3>
+                <p>34% of total supply</p>
             </div>
         </section>
         <section id="settings" class="dashboard-section">
@@ -52,7 +227,7 @@
             </div>
             <div class="card">
                 <h3>Logout</h3>
-                <p><a href="#">Logout</a></p>
+                <p><a href="index.html">Logout</a></p>
             </div>
         </section>
     </main>
