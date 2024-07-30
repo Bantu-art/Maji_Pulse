@@ -12,15 +12,7 @@ a {
 a:hover {
 	color:#5f0099;
 }
-h1, h2, h3 {
-<<<<<<< HEAD:Applight/style.css
-	font-weight: 900;
-=======
-	font-weight: 700;
-	font-size: 80;
->>>>>>> origin/documentation:style.css
-}
-h4, h5 {
+h1, h2, h3 h4, h5 {
 	font-weight:600;
 }
 h6 {
@@ -192,7 +184,7 @@ h6 {
 	border-radius: 100px;
 	background: #7a60ff;
 	background:  linear-gradient(to left, #7a60ff, #cd9ffa);
-	color: #ffffff;
+	color: rgba(255, 0, 0, 0.5);;
 	font-size: 50px;
 	line-height: 135px;
 	margin: 0 auto;
@@ -226,7 +218,7 @@ h6 {
 	overflow: hidden;
 }
 .video-overlay {
-	background: linear-gradient(to left, rgba(122, 96, 255, 0.90), rgba(205, 159, 250, 0.90));
+	background: linear-gradient;
 }
 .video-section h3 {
 	font-weight: 600;
