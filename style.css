@@ -12,12 +12,12 @@ a {
 a:hover {
 	color:#5f0099;
 }
-h1, h2, h3 {
-	font-weight: 700;
-	font-size: 80;
+h1{
+	font-size:50px !important
 }
-h4, h5 {
+h2, h3 h4, h5 {
 	font-weight:600;
+	font-size: 30px !important;
 }
 h6 {
 	font-weight:500;
@@ -28,6 +28,7 @@ h6 {
 .black {
 	color:#000000;
 }
+
 .navbar {
 	position: fixed;
 	right: 0;
@@ -42,8 +43,6 @@ h6 {
 }
 .navbar .active {
 	color: #5f0099 !important;
-}
-.navbar .navbar-brand {
 }
 .navbar .nav-item {
 	margin: 0 5px;
@@ -79,7 +78,7 @@ h6 {
 	transition: all .4s ease;
 }
 .nav-scroll .navbar-nav > li > a {
-	color: #333;
+	color: #0c0b0b;
 }
 .nav-scroll .navbar-brand img {
 	-webkit-transform: scale(1.03) !important;
@@ -89,7 +88,7 @@ h6 {
 	cursor: pointer;
 }
 .nav-scroll .navbar-toggler span {
-	color: #333;
+	color: #141010;
 }
 .nav-scroll .nav-link:hover:after {
 	background-color: #2388ed;
@@ -99,9 +98,10 @@ h6 {
 }
 .banner {
 	background: #7a60ff;
-	background: linear-gradient(to left, #7a60ff, #cd9ffa);
-	padding:100px 0px;
+	background: linear-gradient(to left, #d2cbf4, #3b30df);
+	padding:200px 0px;
 	position:relative;
+	/* background-image: "image/Gota de agua.jpeg"; */
 }
 .banner::before {
 	content: "";
@@ -113,10 +113,10 @@ h6 {
 	height: 100%;
 	background: url(images/pattern.png);
 }
-.banner a.weblink {
+/* .banner a.weblink {
 	color:#ffffff;
 	border-bottom:1px dotted #ffffff;
-}
+} */
 .banner a:hover {
 	text-decoration:none;
 }
@@ -155,6 +155,7 @@ h6 {
 .sectioner-header {
 	width:69%;
 	margin:0 auto;
+	font-size: 19px !important;
 }
 .line {
 	height: 2px;
@@ -173,7 +174,7 @@ h6 {
 	margin-left: -75px;
 }
 .sectioner-header p {
-	color:#818992;
+	color:#050505;
 	font-size: 17px;
 }
 .section-content {
@@ -189,9 +190,9 @@ h6 {
 	height: 135px;
 	border-radius: 100px;
 	background: #7a60ff;
-	background:  linear-gradient(to left, #7a60ff, #cd9ffa);
-	color: #ffffff;
-	font-size: 50px;
+	background:  linear-gradient(to left);
+	color: rgba(252, 252, 252, 0.945);;
+	font-size: 50px !important;
 	line-height: 135px;
 	margin: 0 auto;
 }
@@ -211,72 +212,12 @@ h6 {
 	border-radius: 7px;
 	margin-top: 30px;
 	display: inline-block;
-	font-size: 18px;
+	font-size: 18px !important;
 }
 .about-btn:hover {
 	background:#8e1efc;
-	color:#ffffff;
+	color: #0ccaab !important;;
 	text-decoration:none;
-}
-.video-section {
-	background: url(images/video-bg.jpg) no-repeat fixed center;
-	background-size: cover;
-	overflow: hidden;
-}
-.video-overlay {
-	background: linear-gradient(to left, rgba(122, 96, 255, 0.90), rgba(205, 159, 250, 0.90));
-}
-.video-section h3 {
-	font-weight: 600;
-	font-size: 38px;
-}
-.video-section i {
-	display: block;
-	position: relative;
-	width: 70px;
-	height: 70px;
-	border-radius: 100px;
-	background: #ffffff;
-	color: #8e1efc;
-	font-size: 30px;
-	line-height: 70px;
-	margin: 0 auto;
-	cursor:pointer;
-}
-.video-popup {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 99999;
-	background: rgba(0, 0, 0, 0.5);
-	display: none;
-	align-content: center !important;
-	-ms-flex-line-pack: center !important;
-	-ms-flex-align: center !important;
-	align-items: center !important;
-	-ms-flex-pack: center !important;
-	justify-content: center !important;
-}
-.video-popup .video-src {
-	position: relative;
-	width: 700px;
-	max-width: 80%;
-}
-.video-popup .iframe-src {
-	width: 100%;
-	height: 0;
-	padding-top: 56.3%;
-	position: relative;
-	display: none;
-}
-.video-popup .iframe-src iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
 }
 .single-feature {
 	margin-bottom: 80px;
@@ -291,8 +232,6 @@ h6 {
 .single-feature p {
 	font-size: 13px;
 }
-.icon-border {
-}
 .icon-border span {
 	display: block;
 	position: relative;
@@ -300,7 +239,7 @@ h6 {
 	height: 50px;
 	border-radius: 100px;
 	color: rgb(142, 30, 252);
-	font-size: 18px;
+	font-size: 18px !important;
 	line-height: 50px;
 	border: 1px solid rgb(142, 30, 252);
 }
@@ -461,16 +400,6 @@ input {
 	padding:100px 0px;
 	position:relative;
 }
-.download::before {
-	content: "";
-	display: block;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background: url(images/pattern.png);
-}
 .download ul {
 	list-style: none;
 }
@@ -487,7 +416,7 @@ input {
 }
 .footer-copy {
 	background: #ffffff;
-	color: #242424;
+	color: #0e0d0d;
 	font-size: 13px;
 	text-align: center;
 	padding:15px 0px;
