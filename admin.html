@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .dashboard-header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .dashboard-header nav a:hover {
+            color: #f1f1f1;
+            text-decoration: underline;
+        }
+        .dashboard-content {
+            padding: 20px;
+        }
+        .dashboard-section {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+            width: 300px;
+            vertical-align: top;
+        }
+        .card h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #007bff;
+        }
+        .card p {
+            font-size: 16px;
+            color: #666;
+        }
+        .leakage-alert {
+            color: red;
+            font-weight: bold;
+        }
+        .distribution-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: inline-block;
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <!-- <nav>
+                <a href="#flowrate">Flow Rate</a>
+                <a href="#leakage">Leakage Alerts</a>
+                <a href="#distribution">Fair Distribution</a>
+            </nav> -->
+        </header>
+        <main class="dashboard-content">
+            <section id="flowrate" class="dashboard-section">
+                <h2>Flow Rate</h2>
+                <div class="card" id="flowrate-area1">
+                    <h3>Kondele Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="flowrate-area2">
+                    <h3>Manyatta Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="flowrate-area3">
+                    <h3>Mamboleo Area</h3>
+                    <p>Loading...</p>
+                </div>
+            </section>
+            <section id="leakage" class="dashboard-section">
+                <h2>Leakage Alerts</h2>
+                <div class="card" id="leakage-area1">
+                    <h3>Kondele Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="leakage-area2">
+                    <h3>Manyatta Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="leakage-area3">
+                    <h3>Mamboleo Area</h3>
+                    <p>Loading...</p>
+                </div>
+            </section>
+            <section id="distribution" class="dashboard-section">
+                <h2>Fair Distribution</h2>
+                <div class="distribution-card" id="distribution-area1">
+                    <h3>Kondele Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="distribution-card" id="distribution-area2">
+                    <h3>Manyatta Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="distribution-card" id="distribution-area3">
+                    <h3>Mamboleo Area</h3>
+                    <p>Loading...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        const socket = new WebSocket('ws://' + window.location.host + '/ws');
+    
+        // Static data for fair distribution, ideally this would come from a database or be set at the start
+        const fairDistribution = {
+            area1: 30, // Example percentage
+            area2: 40, // Example percentage
+            area3: 30  // Example percentage
+        };
+    
+        // Simulate leakage data after one minute
+        function simulateLeakage() {
+            setTimeout(() => {
+                const simulatedLeakageData = [
+                    { flow_rate: Math.random() * 100, leakage: false }, // No leakage
+                    { flow_rate: Math.random() * 100, leakage: false }, // No leakage
+                    { flow_rate: Math.random() * 100, leakage: true }  // Leakage in area 3
+                ];
+                handleMessage({ data: JSON.stringify(simulatedLeakageData) });
+            }, 60000); // 1 minute
+        }
+    
+        function handleMessage(event) {
+            const data = JSON.parse(event.data);
+    
+            // Calculate total water flow
+            const totalFlow = data.reduce((sum, sensor) => sum + sensor.flow_rate, 0);
+    
+            // Update flow rate and leakage
+            data.forEach((sensor, index) => {
+                if (sensor.flow_rate !== undefined) {
+                    document.querySelector(`#flowrate-area${index + 1} p`).innerText = `Flow Rate: ${sensor.flow_rate.toFixed(2)} L/min`;
+                }
+                if (sensor.leakage !== undefined) {
+                    const leakageText = sensor.leakage ? 'Leakage: Yes' : 'Leakage: No';
+                    const leakageElement = document.querySelector(`#leakage-area${index + 1} p`);
+                    
+                    if (sensor.leakage) {
+                        // Add red alert class to beam consecutively
+                        leakageElement.innerHTML = `<span class="leakage-alert">${leakageText}</span>`;
+                        setTimeout(() => {
+                            // Remove alert class after 1 minute
+                            leakageElement.querySelector('.leakage-alert').classList.remove('leakage-alert');
+                        }, 60000); // 1 minute
+                    } else {
+                        // No leakage, reset alert class
+                        leakageElement.innerHTML = `<span>${leakageText}</span>`;
+                    }
+                }
+            });
+        }
+    
+        socket.onmessage = handleMessage;
+    
+        socket.onopen = function() {
+            console.log('WebSocket connection established');
+            simulateLeakage(); // Start simulation after WebSocket connection is established
+        };
+    
+        socket.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+    
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+    
+        // Set fair distribution percentages
+        function setFairDistribution() {
+            document.querySelector(`#distribution-area1 p`).innerText = `Fair Distribution: ${fairDistribution.area1}%`;
+            document.querySelector(`#distribution-area2 p`).innerText = `Fair Distribution: ${fairDistribution.area2}%`;
+            document.querySelector(`#distribution-area3 p`).innerText = `Fair Distribution: ${fairDistribution.area3}%`;
+        }
+    
+        // Initialize fair distribution
+        setFairDistribution();
+    </script>
+    
+    
+</body>
+</html>
