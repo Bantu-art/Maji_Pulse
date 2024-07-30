@@ -12,9 +12,12 @@ a {
 a:hover {
 	color:#5f0099;
 }
-h1, h2, h3 h4, h5 {
+h1{
+	font-size:50px !important
+}
+h2, h3 h4, h5 {
 	font-weight:600;
-	font-size: 15px !important;
+	font-size: 30px !important;
 }
 h6 {
 	font-weight:500;
@@ -187,7 +190,7 @@ h6 {
 	height: 135px;
 	border-radius: 100px;
 	background: #7a60ff;
-	background:  linear-gradient(to left, #7a60ff, #cd9ffa);
+	background:  linear-gradient(to left);
 	color: rgba(252, 252, 252, 0.945);;
 	font-size: 50px !important;
 	line-height: 135px;
