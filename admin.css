@@ -141,3 +141,18 @@ a:hover {
         padding: 15px;
     }
 }
+/* Add this to your CSS file */
+@keyframes beamAlert {
+    0% { background-color: red; }
+    50% { background-color: transparent; }
+    100% { background-color: red; }
+}
+
+.leakage-alert {
+    animation: beamAlert 1s linear infinite;
+    color: red;
+    font-weight: bold;
+}
+
+/* Add additional styles for your alert */
+
