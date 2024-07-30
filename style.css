@@ -75,7 +75,7 @@ h6 {
 	transition: all .4s ease;
 }
 .nav-scroll .navbar-nav > li > a {
-	color: #333;
+	color: #0c0b0b;
 }
 .nav-scroll .navbar-brand img {
 	-webkit-transform: scale(1.03) !important;
@@ -85,7 +85,7 @@ h6 {
 	cursor: pointer;
 }
 .nav-scroll .navbar-toggler span {
-	color: #333;
+	color: #141010;
 }
 .nav-scroll .nav-link:hover:after {
 	background-color: #2388ed;
@@ -170,7 +170,7 @@ h6 {
 	margin-left: -75px;
 }
 .sectioner-header p {
-	color:#818992;
+	color:#050505;
 	font-size: 17px;
 }
 .section-content {
@@ -188,7 +188,7 @@ h6 {
 	background: #7a60ff;
 	background:  linear-gradient(to left, #7a60ff, #cd9ffa);
 	color: rgba(252, 252, 252, 0.945);;
-	font-size: 50px;
+	font-size: 50px !important;
 	line-height: 135px;
 	margin: 0 auto;
 }
@@ -212,7 +212,7 @@ h6 {
 }
 .about-btn:hover {
 	background:#8e1efc;
-	color:#ffffff;
+	color: #0ccaab !important;;
 	text-decoration:none;
 }
 .video-section {
@@ -424,7 +424,7 @@ input {
 }
 .footer-copy {
 	background: #ffffff;
-	color: #242424;
+	color: #0e0d0d;
 	font-size: 13px;
 	text-align: center;
 	padding:15px 0px;
