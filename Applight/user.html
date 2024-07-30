@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
     <header class="dashboard-header">
         <div class="container">
@@ -16,45 +17,51 @@
                 <a href="#billing">Billing Information</a>
                 <a href="#settings">Settings</a>
             </nav>
+            <div class="button">
+                <button>Logout</button>
+            </div>
         </div>
     </header>
-    <main class="dashboard-content">
-        <section id="usage" class="dashboard-section">
-            <h2>Water Usage</h2>
-            <div class="card">
-                <h3>Total Usage</h3>
-                <p>1000 Liters</p>
-            </div>
-            <div class="card">
-                <h3>Leakage Alerts</h3>
-                <p>No leaks detected</p>
-            </div>
-        </section>
-        <section id="billing" class="dashboard-section">
-            <h2>Billing Information</h2>
-            <div class="card">
-                <h3>Current Month</h3>
-                <p>$25.00</p>
-            </div>
-            <div class="card">
-                <h3>Billing History</h3>
-                <ul>
-                    <li>June: $20.00</li>
-                    <li>May: $22.50</li>
-                </ul>
-            </div>
-        </section>
+    <div class="contain">
+        <div class = "WUsage">
+            <section id="usage" class="dashboard-section">
+                <h2>Water Usage</h2>
+                <div class="card">
+                    <h3>Total Usage</h3>
+                    <p>1000 Litres</p>
+                </div>
+                <div class="card">
+                    <h3>Leakage Alerts</h3>
+                    <p>No leaks detected</p>
+                </div>
+            </section>
+        </div>
+        <div class="Biling">
+            <section id="billing" class="dashboard-section">
+                <h2>Billing Information</h2>
+                <div class="card">
+                    <h3>Current Month</h3>
+                    <p>Ksh 250.00</p>
+                </div>
+                <div class="card">
+                    <h3>Billing History</h3>
+                    <ul>
+                        <li>June: Ksh 200.00</li>
+                        <li>May: Ksh 220.50</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="dashboard-content">
         <section id="settings" class="dashboard-section">
-            <h2>Settings</h2>
-            <div class="card">
-                <h3>Account Settings</h3>
-                <p><a href="#">Update Profile</a></p>
-            </div>
-            <div class="card">
-                <h3>Logout</h3>
-                <p><a href="#">Logout</a></p>
-            </div>
+            <h2>Report : <select class="report">
+                <option value="Contamination">Contamination</option>
+                <option value="Low Pressure">Low Pressure</option>
+            </select></h2>
+            <p style="color: #007bff; background-color: white; width: 300px; margin-left: 480px; "><b>&copy; 2024 MajiPulse. All rights reserved.</p>
         </section>
-    </main>
+    </div>
+   
 </body>
 </html>
