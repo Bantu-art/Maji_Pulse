@@ -1,12 +1,17 @@
 package api
 
 import (
-	"Maji_pulse/models"
-	"Maji_pulse/services"
+	"majipulse/blockchain" // Import the blockchain package
+	"majipulse/models"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
+
+// Global blockchain instance
+var bc = blockchain.NewBlockchain()
 
 // LeakageDetectorHandler handles leakage detection requests
 func LeakageDetectorHandler(c *gin.Context) {
@@ -16,11 +21,16 @@ func LeakageDetectorHandler(c *gin.Context) {
 		return
 	}
 
-	err := services.DetectLeakage(leakageData)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+	// Log leakage to the blockchain
+	transaction := blockchain.Transaction{
+		ID:        uuid.New().String(),
+		SensorID:  leakageData.SensorID,
+		FlowRate:  leakageData.FlowRate,
+		Timestamp: time.Now().String(),
 	}
+
+	// Add the transaction to the blockchain
+	bc.AddBlock([]blockchain.Transaction{transaction}, bc.GetBlocks()[len(bc.GetBlocks())-1].Hash)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Leakage detected and reported"})
 }
@@ -28,30 +38,13 @@ func LeakageDetectorHandler(c *gin.Context) {
 // ViewWaterUsageHandler allows users to view their water usage
 func ViewWaterUsageHandler(c *gin.Context) {
 	userID := c.Param("user_id")
-	waterUsage, err := services.GetWaterUsageByUserID(userID)
+	waterUsage, err := models.GetWaterUsage(bc, userID) // Adjusted to use blockchain
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, waterUsage)
-}
-
-// ManageEqualDistributionHandler manages equal water distribution
-func ManageEqualDistributionHandler(c *gin.Context) {
-	var distributionData models.DistributionData
-	if err := c.ShouldBindJSON(&distributionData); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid distribution data"})
-		return
-	}
-
-	err := services.DistributeWaterEqually(distributionData)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Water distributed equally"})
 }
 
 // ReportWastageHandler allows users to report water wastage
@@ -62,11 +55,16 @@ func ReportWastageHandler(c *gin.Context) {
 		return
 	}
 
-	err := services.ReportWastage(wastageData)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+	// Create a transaction for the wastage event
+	transaction := blockchain.Transaction{
+		ID:          uuid.New().String(),
+		UserID:      wastageData.UserID,
+		Description: wastageData.Description,
+		Timestamp:   time.Now().String(),
 	}
+
+	// Add the transaction to the blockchain
+	bc.AddBlock([]blockchain.Transaction{transaction}, bc.GetBlocks()[len(bc.GetBlocks())-1].Hash)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Wastage reported successfully"})
 }
@@ -79,19 +77,16 @@ func HandleSensorData(c *gin.Context) {
 		return
 	}
 
-	// Process sensor data (e.g., detect leakage)
-	if sensorData.FlowRate > 0 && sensorData.FlowRate < 0.1 {
-		// Potential leakage detected
-		reportLeakage(sensorData)
+	// Log sensor data to the blockchain
+	transaction := blockchain.Transaction{
+		ID:        uuid.New().String(),
+		SensorID:  sensorData.SensorID,
+		FlowRate:  sensorData.FlowRate,
+		Timestamp: time.Now().String(),
 	}
 
-	// Save sensor data to the database
-	err := database.SaveSensorData(sensorData)
-	if err != nil {
-		utils.Error("Failed to save sensor data: " + err.Error())
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save sensor data"})
-		return
-	}
+	// Add the transaction to the blockchain
+	bc.AddBlock([]blockchain.Transaction{transaction}, bc.GetBlocks()[len(bc.GetBlocks())-1].Hash)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Sensor data received"})
 }

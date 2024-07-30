@@ -1,18 +1,22 @@
 package main
 
 import (
-	"config/config"
-	"handler/api"
 	"log"
+	"majipulse/api"
+	"majipulse/blockchain"
+	"majipulse/config"
 	"net/http"
 )
 
 func main() {
+
+	var bc = blockchain.NewBlockchain()
+
 	// Load configuration
 	cfg := config.LoadConfig()
 
 	// Set up routes
-	router := api.SetupRouter()
+	router := api.SetupRouter(bc)
 
 	// Start the server
 	log.Printf("Starting server on port %s...", cfg.ServerPort)
