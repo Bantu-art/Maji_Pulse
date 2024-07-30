@@ -10,6 +10,12 @@ body {
 .container {
     width: 80%;
     margin: 0 auto;
+    text-align: center;
+}
+.my-image{
+  width: 100%;
+  height: auto;
+  border: 2px solid
 }
 
 /* Header Styles */
@@ -47,17 +53,19 @@ body {
 /* Main Content Styles */
 .dashboard-content {
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    text-align: center;
+    background-image: url('pulse.jpg');
+    background-size: cover;
 
-.dashboard-section {
-    margin-bottom: 20px;
+}
+h2{
+    color : #007bff;
 }
 
 .card {
-    background-color: #fff;
+    background-image: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -116,6 +124,7 @@ a:hover {
     text-decoration: none;
 }
 
+
 .btn-login {
     background-color: #007bff;
     color: #fff;
@@ -126,6 +135,38 @@ a:hover {
     color: #e0e0e0;
 }
 
+
+.button{
+    margin-left: 100%;
+
+}
+.WUsage{
+    margin-right: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.report{
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+.newrepo{
+    text-align: center;
+}
+
+.Biling{
+    margin-top: -380px;     
+        margin-left: 50%;
+        padding: 6px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -136,8 +177,8 @@ a:hover {
         display: block;
         margin: 10px 0;
     }
-
     .card {
         padding: 15px;
     }
+   
 }
