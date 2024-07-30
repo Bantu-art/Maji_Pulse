@@ -94,11 +94,11 @@
     <div class="container">
         <header class="dashboard-header">
             <h1>Admin Dashboard</h1>
-            <nav>
+            <!-- <nav>
                 <a href="#flowrate">Flow Rate</a>
                 <a href="#leakage">Leakage Alerts</a>
                 <a href="#distribution">Fair Distribution</a>
-            </nav>
+            </nav> -->
         </header>
         <main class="dashboard-content">
             <section id="flowrate" class="dashboard-section">
@@ -183,8 +183,19 @@
                 }
                 if (sensor.leakage !== undefined) {
                     const leakageText = sensor.leakage ? 'Leakage: Yes' : 'Leakage: No';
-                    const leakageClass = sensor.leakage ? 'leakage-alert' : '';
-                    document.querySelector(`#leakage-area${index + 1} p`).innerHTML = `<span class="${leakageClass}">${leakageText}</span>`;
+                    const leakageElement = document.querySelector(`#leakage-area${index + 1} p`);
+                    
+                    if (sensor.leakage) {
+                        // Add red alert class to beam consecutively
+                        leakageElement.innerHTML = `<span class="leakage-alert">${leakageText}</span>`;
+                        setTimeout(() => {
+                            // Remove alert class after 1 minute
+                            leakageElement.querySelector('.leakage-alert').classList.remove('leakage-alert');
+                        }, 60000); // 1 minute
+                    } else {
+                        // No leakage, reset alert class
+                        leakageElement.innerHTML = `<span>${leakageText}</span>`;
+                    }
                 }
             });
         }
@@ -214,6 +225,7 @@
         // Initialize fair distribution
         setFairDistribution();
     </script>
+    
     
 </body>
 </html>

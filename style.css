@@ -13,7 +13,12 @@ a:hover {
 	color:#5f0099;
 }
 h1, h2, h3 {
+<<<<<<< HEAD:Applight/style.css
 	font-weight: 900;
+=======
+	font-weight: 700;
+	font-size: 80;
+>>>>>>> origin/documentation:style.css
 }
 h4, h5 {
 	font-weight:600;

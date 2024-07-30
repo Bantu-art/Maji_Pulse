@@ -1,1 +1,0 @@
-## MajiPulse Project
