@@ -14,6 +14,7 @@ a:hover {
 }
 h1, h2, h3 h4, h5 {
 	font-weight:600;
+	font-size: 15px !important;
 }
 h6 {
 	font-weight:500;
@@ -24,6 +25,7 @@ h6 {
 .black {
 	color:#000000;
 }
+
 .navbar {
 	position: fixed;
 	right: 0;
@@ -96,6 +98,7 @@ h6 {
 	background: linear-gradient(to left, #d2cbf4, #3b30df);
 	padding:200px 0px;
 	position:relative;
+	/* background-image: "image/Gota de agua.jpeg"; */
 }
 .banner::before {
 	content: "";
