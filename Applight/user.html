@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <h1>Welcome, [Username]</h1>
+            <nav>
+                <a href="#usage">Water Usage</a>
+                <a href="#billing">Billing Information</a>
+                <a href="#settings">Settings</a>
+            </nav>
+            <div class="button">
+                <button>Logout</button>
+            </div>
+        </div>
+    </header>
+    <div class="contain">
+        <div class = "WUsage">
+            <section id="usage" class="dashboard-section">
+                <h2>Water Usage</h2>
+                <div class="card">
+                    <h3>Total Usage</h3>
+                    <p>1000 Litres</p>
+                </div>
+                <div class="card">
+                    <h3>Leakage Alerts</h3>
+                    <p>No leaks detected</p>
+                </div>
+            </section>
+        </div>
+        <div class="Biling">
+            <section id="billing" class="dashboard-section">
+                <h2>Billing Information</h2>
+                <div class="card">
+                    <h3>Current Month</h3>
+                    <p>Ksh 250.00</p>
+                </div>
+                <div class="card">
+                    <h3>Billing History</h3>
+                    <ul>
+                        <li>June: Ksh 200.00</li>
+                        <li>May: Ksh 220.50</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="dashboard-content">
+        <section id="settings" class="dashboard-section">
+            <h2>Report : <select class="report">
+                <option value="Contamination">Contamination</option>
+                <option value="Low Pressure">Low Pressure</option>
+            </select></h2>
+            <p style="color: #007bff; background-color: white; width: 300px; margin-left: 480px; "><b>&copy; 2024 MajiPulse. All rights reserved.</p>
+        </section>
+    </div>
+   
+</body>
+</html>
