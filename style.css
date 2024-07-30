@@ -110,10 +110,10 @@ h6 {
 	height: 100%;
 	background: url(images/pattern.png);
 }
-.banner a.weblink {
+/* .banner a.weblink {
 	color:#ffffff;
 	border-bottom:1px dotted #ffffff;
-}
+} */
 .banner a:hover {
 	text-decoration:none;
 }
@@ -152,6 +152,7 @@ h6 {
 .sectioner-header {
 	width:69%;
 	margin:0 auto;
+	font-size: 19px !important;
 }
 .line {
 	height: 2px;
@@ -208,24 +209,12 @@ h6 {
 	border-radius: 7px;
 	margin-top: 30px;
 	display: inline-block;
-	font-size: 18px;
+	font-size: 18px !important;
 }
 .about-btn:hover {
 	background:#8e1efc;
 	color: #0ccaab !important;;
 	text-decoration:none;
-}
-.video-section {
-	background: url(images/video-bg.jpg) no-repeat fixed center;
-	background-size: cover;
-	overflow: hidden;
-}
-.video-overlay {
-	background: linear-gradient;
-}
-.video-section h3 {
-	font-weight: 600;
-	font-size: 38px;
 }
 .single-feature {
 	margin-bottom: 80px;
@@ -247,7 +236,7 @@ h6 {
 	height: 50px;
 	border-radius: 100px;
 	color: rgb(142, 30, 252);
-	font-size: 18px;
+	font-size: 18px !important;
 	line-height: 50px;
 	border: 1px solid rgb(142, 30, 252);
 }
