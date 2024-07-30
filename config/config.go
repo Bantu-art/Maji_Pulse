@@ -7,7 +7,6 @@ import (
 // Config holds the configuration settings for the application.
 type Config struct {
 	ServerPort    string // Port for the API server
-	DatabaseURL   string // Database connection string
 	BlockchainURL string // URL for the blockchain service
 	SensorAPIURL  string // API endpoint for sensor data
 }
@@ -16,7 +15,6 @@ type Config struct {
 func LoadConfig() Config {
 	return Config{
 		ServerPort:    getEnv("SERVER_PORT", "8080"),
-		DatabaseURL:   getEnv("DATABASE_URL", "postgres://user:password@localhost:5432/mydb?sslmode=disable"),
 		BlockchainURL: getEnv("BLOCKCHAIN_URL", "http://localhost:8000"),
 		SensorAPIURL:  getEnv("SENSOR_API_URL", "http://localhost:8080/api/sensor-data"),
 	}
