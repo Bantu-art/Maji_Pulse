@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .dashboard-header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .dashboard-header nav a:hover {
+            color: #f1f1f1;
+            text-decoration: underline;
+        }
+        .dashboard-content {
+            padding: 20px;
+        }
+        .dashboard-section {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .card, .distribution-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: inline-block;
+            width: 300px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card h3, .distribution-card h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #007bff;
+        }
+        .card p, .distribution-card p {
+            font-size: 16px;
+            color: #666;
+        }
+        .leakage-alert {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <!-- <nav>
+                <a href="#flowrate">Flow Rate</a>
+                <a href="#leakage">Leakage Alerts</a>
+                <a href="#distribution">Fair Distribution</a>
+            </nav> -->
+        </header>
+        <main class="dashboard-content">
+            <section id="flowrate" class="dashboard-section">
+                <h2>Flow Rate</h2>
+                <div class="card" id="flowrate-kondelearea">
+                    <h3>Kondele Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="flowrate-manyattaarea">
+                    <h3>Manyatta Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="flowrate-mamboleoarea">
+                    <h3>Mamboleo Area</h3>
+                    <p>Loading...</p>
+                </div>
+            </section>
+            
+            <section id="leakage" class="dashboard-section">
+                <h2>Leakage Alerts</h2>
+                <div class="card" id="leakage-kondelearea">
+                    <h3>Kondele Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="leakage-manyattaarea">
+                    <h3>Manyatta Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="card" id="leakage-mamboleoarea">
+                    <h3>Mamboleo Area</h3>
+                    <p>Loading...</p>
+                </div>
+            </section>
+            
+            <section id="distribution" class="dashboard-section">
+                <h2>Fair Distribution</h2>
+                <div class="distribution-card" id="distribution-kondelearea">
+                    <h3>Kondele Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="distribution-card" id="distribution-manyattaarea">
+                    <h3>Manyatta Area</h3>
+                    <p>Loading...</p>
+                </div>
+                <div class="distribution-card" id="distribution-mamboleoarea">
+                    <h3>Mamboleo Area</h3>
+                    <p>Loading...</p>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+    <script>
+        function fetchAdminData() {
+            fetch('/admin-data')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Fetched data:", data); // Log the data to debug
+    
+                    if (Array.isArray(data)) {
+                        data.forEach(item => {
+                            if (item.area && item.flow_rate !== undefined && item.leakage !== undefined && item.fair_percentage !== undefined) {
+                                const areaID = `flowrate-${item.area.replace(/ /g, '').toLowerCase()}`; // Dynamically create the ID
+                                const leakageID = `leakage-${item.area.replace(/ /g, '').toLowerCase()}`; // Dynamically create the ID
+                                const distributionID = `distribution-${item.area.replace(/ /g, '').toLowerCase()}`; // Dynamically create the ID
+    
+                                // Update flow rate section
+                                const flowRateElement = document.getElementById(areaID);
+                                if (flowRateElement) {
+                                    flowRateElement.querySelector('p').textContent = `Flow Rate: ${item.flow_rate.toFixed(2)} L/s`;
+                                }
+    
+                                // Update leakage section
+                                const leakageElement = document.getElementById(leakageID);
+                                if (leakageElement) {
+                                    leakageElement.querySelector('p').textContent = `Leakage: ${item.leakage ? 'Yes' : 'No'}`;
+                                    leakageElement.querySelector('p').className = item.leakage ? 'leakage-alert' : '';
+                                }
+    
+                                // Update distribution section
+                                const distributionElement = document.getElementById(distributionID);
+                                if (distributionElement) {
+                                    distributionElement.querySelector('p').textContent = `Fair Percentage: ${item.fair_percentage.toFixed(2)}%`;
+                                }
+                            } else {
+                                console.error('Invalid data item:', item);
+                            }
+                        });
+                    } else {
+                        console.error('Invalid data received:', data);
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    
+        // Fetch data every second
+        setInterval(fetchAdminData, 1000);
+        fetchAdminData();  // Initial fetch
+    </script>
+    
+</body>
+</html>

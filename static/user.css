@@ -1,0 +1,184 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Light background color */
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+.my-image{
+  width: 100%;
+  height: auto;
+  border: 2px solid
+}
+
+/* Header Styles */
+.dashboard-header {
+    background-color: #007bff; /* Primary color */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.dashboard-header nav {
+    margin-top: 10px;
+}
+
+.dashboard-header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.dashboard-header nav a:hover {
+    color: #f1f1f1;
+    text-decoration: underline;
+}
+
+/* Main Content Styles */
+.dashboard-content {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-image: url('pulse.jpg');
+    background-size: cover;
+
+}
+h2{
+    color : #007bff;
+}
+
+.card {
+    background-image: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #007bff; /* Primary color */
+}
+
+.card p {
+    font-size: 16px;
+    color: #666;
+}
+
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.card ul li {
+    margin-bottom: 10px;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+}
+
+
+.btn-login {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-login:hover {
+    background-color: #0056b3;
+    color: #e0e0e0;
+}
+
+
+.button{
+    margin-left: 100%;
+
+}
+.WUsage{
+    margin-right: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.report{
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+.newrepo{
+    text-align: center;
+}
+
+.Biling{
+    margin-top: -380px;     
+        margin-left: 50%;
+        padding: 6px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .dashboard-header nav a {
+        display: block;
+        margin: 10px 0;
+    }
+    .card {
+        padding: 15px;
+    }
+   
+}
