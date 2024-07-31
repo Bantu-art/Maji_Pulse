@@ -1,74 +1,90 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
+	"html/template"
 	"math/rand"
 	"net/http"
 	"time"
-
-	"github.com/gorilla/websocket"
 )
 
-// WebSocket upgrader
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
-
-// SensorData struct to hold the sensor data
-type SensorData struct {
+// AdminSensorData represents the data sent to the admin dashboard
+type AdminSensorData struct {
 	Area           string  `json:"area"`
 	FlowRate       float64 `json:"flow_rate"`
 	Leakage        bool    `json:"leakage"`
 	FairPercentage float64 `json:"fair_percentage"`
 }
 
-// Handle WebSocket connections
-func wsHandler(w http.ResponseWriter, r *http.Request) {
-	conn, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		fmt.Println("Error upgrading to WebSocket:", err)
-		return
-	}
-	defer conn.Close()
+// UserSensorData represents the data sent to the user dashboard
+type UserSensorData struct {
+	FlowRate float64 `json:"flow_rate"`
+	Cost     float64 `json:"cost"`
+}
 
-	leakageTicker := time.NewTicker(2 * time.Minute)
-	defer leakageTicker.Stop()
-
-	for {
-		select {
-		case <-time.After(1 * time.Second):
-			// Simulate flow rate and fair distribution data every second
-			data := []SensorData{
-				{"Area 1", rand.Float64() * 100, false, rand.Float64() * 100},
-				{"Area 2", rand.Float64() * 100, false, rand.Float64() * 100},
-				{"Area 3", rand.Float64() * 100, false, rand.Float64() * 100},
-			}
-			if err := conn.WriteJSON(data); err != nil {
-				fmt.Println("Error writing JSON to WebSocket:", err)
-				return
-			}
-
-		case <-leakageTicker.C:
-			// Simulate leakage data every 2 minutes
-			data := []SensorData{
-				{"Area 1", 0, rand.Intn(2) == 1, 0},
-				{"Area 2", 0, rand.Intn(2) == 1, 0},
-				{"Area 3", 0, rand.Intn(2) == 1, 0},
-			}
-			if err := conn.WriteJSON(data); err != nil {
-				fmt.Println("Error writing JSON to WebSocket:", err)
-				return
-			}
-		}
+// simulateAdminData simulates real-time admin sensor data
+func simulateAdminData() []AdminSensorData {
+	return []AdminSensorData{
+		{"Kondele Area", rand.Float64() * 100, rand.Intn(2) == 1, 30},
+		{"Manyatta Area", rand.Float64() * 100, rand.Intn(2) == 1, 40},
+		{"Mamboleo Area", rand.Float64() * 100, rand.Intn(2) == 1, 30},
 	}
 }
 
-func main() {
-	http.HandleFunc("/ws", wsHandler)
-	http.Handle("/", http.FileServer(http.Dir("./")))
 
-	fmt.Println("Server started at :8090")
+// simulateUserData simulates real-time user sensor data
+func simulateUserData() []UserSensorData {
+	return []UserSensorData{
+		{FlowRate: rand.Float64() * 100, Cost: rand.Float64() * 100},
+	}
+}
+
+func adminPageHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("static/admin.html")
+	if err != nil {
+		http.Error(w, "Unable to load template", http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, "Unable to execute template", http.StatusInternalServerError)
+	}
+}
+
+func userPageHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("static/user.html")
+	if err != nil {
+		http.Error(w, "Unable to load template", http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, "Unable to execute template", http.StatusInternalServerError)
+	}
+}
+
+func adminDataHandler(w http.ResponseWriter, r *http.Request) {
+	data := simulateAdminData()
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
+
+func userDataHandler(w http.ResponseWriter, r *http.Request) {
+	data := simulateUserData()
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
+
+func main() {
+	http.Handle("/", http.FileServer(http.Dir("./static")))
+
+	http.HandleFunc("/admin", adminPageHandler)
+	http.HandleFunc("/user", userPageHandler)
+	http.HandleFunc("/admin-data", adminDataHandler)
+	http.HandleFunc("/user-data", userDataHandler)
+
+	// Seed random number generator
+	rand.Seed(time.Now().UnixNano())
+
 	http.ListenAndServe(":8090", nil)
 }
