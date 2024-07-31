@@ -17,6 +17,8 @@ func main() {
 
 	// Set up routes
 	router := api.SetupRouter(bc)
+	router.Run(":8080")
+	// router.Static("index.html", "./static")
 
 	// Start the server
 	log.Printf("Starting server on port %s...", cfg.ServerPort)

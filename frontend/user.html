@@ -176,47 +176,47 @@
     <main class="dashboard-content">
         <section id="flowrate" class="dashboard-section">
             <h2>Flow Rate</h2>
-            <div class="card">
+            <div class="card" id="flowrateKondele">
                 <h3>Kondele</h3>
-                <p>10 L/min</p>
+                <p>Loading...</p>
             </div>
-            <div class="card">
+            <div class="card" id="flowrateManyatta">
                 <h3>Manyatta</h3>
-                <p>15 L/min</p>
+                <p>Loading...</p>
             </div>
-            <div class="card">
+            <div class="card" id="flowrateMamboleo">
                 <h3>Mamboleo</h3>
-                <p>12 L/min</p>
+                <p>Loading...</p>
             </div>
         </section>
         <section id="leakage" class="dashboard-section">
             <h2>Leakage Alerts</h2>
-            <div class="card">
+            <div class="card" id="leakageKondele">
                 <h3>Kondele</h3>
-                <p>No leaks detected</p>
+                <p>Loading...</p>
             </div>
-            <div class="card">
+            <div class="card" id="leakageManyatta">
                 <h3>Manyatta</h3>
-                <p>Leak detected</p>
+                <p>Loading...</p>
             </div>
-            <div class="card">
+            <div class="card" id="leakageMamboleo">
                 <h3>Mamboleo</h3>
-                <p>No leaks detected</p>
+                <p>Loading...</p>
             </div>
         </section>
         <section id="distribution" class="dashboard-section">
             <h2>Fair Distribution</h2>
-            <div class="card">
+            <div class="card" id="distributionKondele">
                 <h3>Kondele</h3>
-                <p>33% of total supply</p>
+                <p>Loading...</p>
             </div>
-            <div class="card">
+            <div class="card" id="distributionManyatta">
                 <h3>Manyatta</h3>
-                <p>33% of total supply</p>
+                <p>Loading...</p>
             </div>
-            <div class="card">
+            <div class="card" id="distributionMamboleo">
                 <h3>Mamboleo</h3>
-                <p>34% of total supply</p>
+                <p>Loading...</p>
             </div>
         </section>
         <section id="settings" class="dashboard-section">
@@ -231,5 +231,39 @@
             </div>
         </section>
     </main>
+
+    <script>
+        // Function to fetch data from the backend
+        async function fetchData() {
+            try {
+                // Fetch flow rate data
+                const flowRateResponse = await fetch('/api/flow-rate'); // Adjust the endpoint as necessary
+                const flowRateData = await flowRateResponse.json();
+                document.getElementById('flowrateKondele').querySelector('p').textContent = flowRateData.kondele + ' L/min';
+                document.getElementById('flowrateManyatta').querySelector('p').textContent = flowRateData.manyatta + ' L/min';
+                document.getElementById('flowrateMamboleo').querySelector('p').textContent = flowRateData.mamboleo + ' L/min';
+
+                // Fetch leakage data
+                const leakageResponse = await fetch('/api/leakage-alerts'); // Adjust the endpoint as necessary
+                const leakageData = await leakageResponse.json();
+                document.getElementById('leakageKondele').querySelector('p').textContent = leakageData.kondele ? 'Leak detected' : 'No leaks detected';
+                document.getElementById('leakageManyatta').querySelector('p').textContent = leakageData.manyatta ? 'Leak detected' : 'No leaks detected';
+                document.getElementById('leakageMamboleo').querySelector('p').textContent = leakageData.mamboleo ? 'Leak detected' : 'No leaks detected';
+
+                // Fetch distribution data
+                const distributionResponse = await fetch('/api/fair-distribution'); // Adjust the endpoint as necessary
+                const distributionData = await distributionResponse.json();
+                document.getElementById('distributionKondele').querySelector('p').textContent = distributionData.kondele + '% of total supply';
+                document.getElementById('distributionManyatta').querySelector('p').textContent = distributionData.manyatta + '% of total supply';
+                document.getElementById('distributionMamboleo').querySelector('p').textContent = distributionData.mamboleo + '% of total supply';
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Call fetchData when the page loads
+        window.onload = fetchData;
+    </script>
 </body>
 </html>
