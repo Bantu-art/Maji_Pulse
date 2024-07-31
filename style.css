@@ -52,7 +52,7 @@ h6 {
 	color: #fff;
 	text-transform: uppercase;
 	font-weight: 600;
-	font-size: 13px;
+	font-size: 20px !important;
 }
 .navbar .nav-item a:hover {
 	color: #5f0099;
