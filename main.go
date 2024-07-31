@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"math/rand"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -22,15 +23,57 @@ type UserSensorData struct {
 	Cost     float64 `json:"cost"`
 }
 
-// simulateAdminData simulates real-time admin sensor data
-func simulateAdminData() []AdminSensorData {
-	return []AdminSensorData{
-		{"Kondele Area", rand.Float64() * 100, rand.Intn(2) == 1, 30},
-		{"Manyatta Area", rand.Float64() * 100, rand.Intn(2) == 1, 40},
-		{"Mamboleo Area", rand.Float64() * 100, rand.Intn(2) == 1, 30},
+// AreaData represents the state of each area
+type AreaData struct {
+	Area            string
+	FlowRate        float64
+	Leakage         bool
+	NormalFlowRate  float64
+	FairPercentage  float64
+}
+
+// Global variable to store the state of each area
+var areas []AreaData
+var areasMutex sync.Mutex
+
+// initializeAreas initializes the state of each area
+func initializeAreas() {
+	areas = []AreaData{
+		{"Kondele Area", 0, false, rand.Float64() * 100, 30},
+		{"Manyatta Area", 0, false, rand.Float64() * 100, 40},
+		{"Mamboleo Area", 0, false, rand.Float64() * 100, 30},
 	}
 }
 
+// simulateAdminData simulates real-time admin sensor data
+func simulateAdminData() []AdminSensorData {
+	areasMutex.Lock()
+	defer areasMutex.Unlock()
+
+	for i := range areas {
+		if areas[i].Leakage {
+			areas[i].FlowRate = areas[i].NormalFlowRate + (rand.Float64() * 200 - 100) // Simulate leakage
+		} else {
+			areas[i].FlowRate = areas[i].NormalFlowRate + (rand.Float64() * 20 - 10) // Normal fluctuation
+		}
+		// Ensure flow rate is positive
+		if areas[i].FlowRate < 0 {
+			areas[i].FlowRate = 0
+		}
+	}
+
+	data := make([]AdminSensorData, len(areas))
+	for i, area := range areas {
+		data[i] = AdminSensorData{
+			Area:           area.Area,
+			FlowRate:       area.FlowRate,
+			Leakage:        area.Leakage,
+			FairPercentage: area.FairPercentage,
+		}
+	}
+
+	return data
+}
 
 // simulateUserData simulates real-time user sensor data
 func simulateUserData() []UserSensorData {
@@ -39,8 +82,43 @@ func simulateUserData() []UserSensorData {
 	}
 }
 
+// checkForLeakage checks and updates the leakage status based on flow rate
+func checkForLeakage() {
+	areasMutex.Lock()
+	defer areasMutex.Unlock()
+
+	for i := range areas {
+		flowRate := rand.Float64() * 100
+		if flowRate > areas[i].NormalFlowRate*1.5 || flowRate < areas[i].NormalFlowRate*0.5 {
+			areas[i].Leakage = true
+		} else {
+			areas[i].Leakage = false
+		}
+		areas[i].FlowRate = flowRate
+	}
+}
+
+// simulateLeakage simulates leakage starting after 1 minute and stopping after 2 minutes
+func simulateLeakage() {
+	for {
+		time.Sleep(1 * time.Minute) // Wait for 1 minute before starting the leakage
+		areasMutex.Lock()
+		for i := range areas {
+			areas[i].Leakage = true
+		}
+		areasMutex.Unlock()
+
+		time.Sleep(2 * time.Minute) // Wait for 2 minutes before stopping the leakage
+		areasMutex.Lock()
+		for i := range areas {
+			areas[i].Leakage = false
+		}
+		areasMutex.Unlock()
+	}
+}
+
 func adminPageHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("static/admin.html")
+	tmpl, err := template.ParseFiles("templates/admin.html")
 	if err != nil {
 		http.Error(w, "Unable to load template", http.StatusInternalServerError)
 		return
@@ -52,7 +130,43 @@ func adminPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func userPageHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("static/user.html")
+	tmpl, err := template.ParseFiles("templates/user.html")
+	if err != nil {
+		http.Error(w, "Unable to load template", http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, "Unable to execute template", http.StatusInternalServerError)
+	}
+}
+
+func loginPageHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("templates/login.html")
+	if err != nil {
+		http.Error(w, "Unable to load template", http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, "Unable to execute template", http.StatusInternalServerError)
+	}
+}
+
+func homePageHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		http.Error(w, "Unable to load template", http.StatusInternalServerError)
+		return
+	}
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		http.Error(w, "Unable to execute template", http.StatusInternalServerError)
+	}
+}
+
+func signupHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("templates/signup.html")
 	if err != nil {
 		http.Error(w, "Unable to load template", http.StatusInternalServerError)
 		return
@@ -76,9 +190,16 @@ func userDataHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.Handle("/", http.FileServer(http.Dir("./static")))
+	initializeAreas()
 
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	http.HandleFunc("/", homePageHandler)
 	http.HandleFunc("/admin", adminPageHandler)
+	http.HandleFunc("/login", loginPageHandler)
+
+	http.HandleFunc("/signup", signupHandler)
 	http.HandleFunc("/user", userPageHandler)
 	http.HandleFunc("/admin-data", adminDataHandler)
 	http.HandleFunc("/user-data", userDataHandler)
@@ -86,5 +207,15 @@ func main() {
 	// Seed random number generator
 	rand.Seed(time.Now().UnixNano())
 
-	http.ListenAndServe(":8090", nil)
+	// Periodically check for leakage every 2 minutes
+	go func() {
+		for range time.Tick(2 * time.Minute) {
+			checkForLeakage()
+		}
+	}()
+
+	// Simulate leakage starting after 1 minute and stopping after 2 minutes
+	go simulateLeakage()
+
+	http.ListenAndServe(":8060", nil)
 }
